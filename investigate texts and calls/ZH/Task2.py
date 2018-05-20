@@ -3,10 +3,11 @@
 你将在以后的课程中了解更多有关读取文件的知识。
 """
 import csv
+'''
 with open('texts.csv', 'r') as f:
     reader = csv.reader(f)
     texts = list(reader)
-
+'''
 with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
     calls = list(reader)
@@ -23,3 +24,26 @@ September 2016.".
 如果键不存在于字典内，将此键加入字典，并将它的值设为给定值。
 """
 
+
+dict_duration = {}
+for call in calls:
+    # collect caller duration. If key exists, update value; else add item {key:value}
+    v = dict_duration.get(call[0])
+    if v:
+        dict_duration[call[0]] = v + int(call[3])
+    else:
+        dict_duration[call[0]] = int(call[3])
+
+    # collect call receiver duration. If key exists, update value; else add item {key:value}
+    v = dict_duration.get(call[1])
+    if v:
+        dict_duration[call[1]] = v + int(call[3])
+    else:
+        dict_duration[call[1]] = int(call[3])
+
+# get key of max duration
+key_max = max(dict_duration, key = dict_duration.get)
+# get value of max duration
+value_max = dict_duration[key_max]
+
+print("{} spent the longest time, {} seconds, on the phone during September 2016.".format(key_max, value_max))

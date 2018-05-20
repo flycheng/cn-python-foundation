@@ -26,3 +26,31 @@ with open('calls.csv', 'r') as f:
 电话号码不能重复，每行打印一条，按字典顺序排序后输出。
 """
 
+caller, receiver, call_time, call_dura = zip(*calls)
+text_sender, text_receiver, text_time = zip(*texts)
+
+# set of caller
+set_caller = set(caller)
+# set of call receiver
+set_receiver = set(receiver)
+# set of text sender
+set_text_sender = set(text_sender)
+# set of text receiver
+set_text_receiver = set(text_receiver)
+
+# telemarketer is always a caller and not a receiver
+set_telemarketer = set_caller - set_receiver
+
+# telemarketer is not a text sender
+set_telemarketer = set_telemarketer -  set_text_sender
+
+# telemarketer is not a text receiver
+set_telemarketer = set_telemarketer - set_text_receiver
+
+# convert to a list and sort
+list_telemarketer = list(set_telemarketer)
+list_telemarketer.sort()
+
+print("These numbers could be telemarketers: ")
+for telemarketer in list_telemarketer:
+    print(telemarketer)
